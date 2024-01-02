@@ -1,0 +1,152 @@
+<Page x:Class="app.RegisterPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:local="clr-namespace:app"
+      xmlns:vm="clr-namespace:app.ViewModels"
+      xmlns:c="clr-namespace:app.Command"
+      mc:Ignorable="d"
+      Title="RegisterPage"
+      Background="Black">
+    <Grid>
+        <DockPanel>
+            <Frame x:Name="RegisterFrame" />
+        </DockPanel>
+        <StackPanel Orientation="Vertical"
+                    HorizontalAlignment="Right">
+            <Button x:Name="HomeButton"
+                    Width="80"
+                    Height="30"
+                    Click="HomeButton_Click">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="10"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+                <TextBlock Text="Home" />
+            </Button>
+        </StackPanel>
+        <Border Width="300"
+                Height="500"
+                Background="White"
+                CornerRadius="6">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="15"
+                                  Direction="-90"
+                                  RenderingBias="Quality"
+                                  ShadowDepth="2"
+                                  Color="Gray" />
+            </Border.Effect>
+            <StackPanel Orientation="Vertical"
+                        Margin="20">
+                <Label Content="Kayıt Ol"
+                       FontSize="25"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top"
+                       FontWeight="Bold"
+                       Padding="10" />
+                <Grid VerticalAlignment="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock x:Name="UsernameTextBox"
+                               Text="User Name"
+                               Grid.Row="0"
+                               Margin="0,15"
+                               HorizontalAlignment="Left" />
+                    <TextBox Grid.Column="1"
+                             Grid.Row="1"
+                             Padding="0,5"
+                             Width="255"
+                             BorderThickness="0,0,0,1"
+                             HorizontalAlignment="Left"
+                             Text="{Binding User.Username, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBlock x:Name="NameTextBox"
+                               Text="Name"
+                               Grid.Row="2"
+                               Margin="0,15"
+                               HorizontalAlignment="Left" />
+                    <TextBox Grid.Row="3"
+                             Padding="0,5"
+                             Width="255"
+                             BorderThickness="0,0,0,1"
+                             HorizontalAlignment="Left"
+                             Text="{Binding User.Name, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBlock x:Name="SurnameTextBox"
+                               Text="Surname"
+                               Grid.Row="4"
+                               Margin="0,15"
+                               HorizontalAlignment="Left" />
+                    <TextBox Grid.Row="5"
+                             Padding="0,5"
+                             Width="255"
+                             BorderThickness="0,0,0,1"
+                             HorizontalAlignment="Left"
+                             Text="{Binding User.Surname, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBlock Text="Password"
+                               Grid.Row="6"
+                               Margin="0,15"
+                               HorizontalAlignment="Left" />
+                    <TextBox x:Name="PasswordTextBox"
+                             Grid.Row="7"
+                             Text="{Binding User.Password, UpdateSourceTrigger=PropertyChanged}"
+                             Padding="0,5"
+                             Width="255"
+                             Foreground="Transparent"
+                             BorderThickness="0,0,0,1"
+                             HorizontalAlignment="Left" />
+                </Grid>
+                <Button Content="Save"
+                        Foreground="White"
+                        Background="Black"
+                        Margin="0,25"
+                        Height="35"
+                        Width="250"
+                        Command="{Binding RegisterCommand}"
+                        CommandParameter="{Binding ElementName=PasswordBox}">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Border x:Name="LoginBorder"
+                                                Background="{TemplateBinding Background}"
+                                                CornerRadius="16">
+                                            <ContentPresenter HorizontalAlignment="Center"
+                                                              VerticalAlignment="Center" />
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver"
+                                                     Value="True">
+                                                <Setter Property="Background"
+                                                        Value="AliceBlue"
+                                                        TargetName="LoginBorder" />
+                                                <Setter Property="TextBlock.Foreground"
+                                                        Value="Black"
+                                                        TargetName="LoginBorder" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>
