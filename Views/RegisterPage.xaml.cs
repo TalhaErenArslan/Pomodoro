@@ -25,9 +25,11 @@ namespace app
             DataContext = new RegisterViewModel();
         }
 
-        private void RegisterButton_Click(object sender, RoutedEventArgs e)
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            //NavigationService?.GoBack();
+            Frame frame = new Frame();
+            frame.Content = new LoginPage();
+            this.Content = frame;
         }
 
         private void HomeButton_Click(object sender, RoutedEventArgs e)

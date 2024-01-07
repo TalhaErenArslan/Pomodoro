@@ -22,6 +22,9 @@ namespace app
 {
     public class RegisterViewModel : INotifyPropertyChanged
     {
+
+        public ICommand RegisterCommand { get; }
+        public ICommand LoginCommand { get; }
         private User _user;
 
         public User User
@@ -34,9 +37,31 @@ namespace app
             }
         }
 
-        public ICommand RegisterCommand { get; }
-        public ICommand LoginCommand { get; }
+        private Todo _todo;
+
+        public Todo Todo
+        {
+            get { return _todo; }
+            set
+            {
+                _todo = value;
+                OnPropertyChanged(nameof(Todo));
+            }
+        }
+
+
         public string Password { get; internal set; }
+
+        private bool _isLoginButtonVisible;
+        public bool IsLoginButtonVisible
+        {
+            get { return _isLoginButtonVisible; }
+            set
+            {
+                _isLoginButtonVisible = value;
+                OnPropertyChanged(nameof(IsLoginButtonVisible));
+            }
+        }
         private string _loggedInUsername;
         public string LoggedInUsername
         {
@@ -47,15 +72,26 @@ namespace app
                 OnPropertyChanged(nameof(LoggedInUsername));
             }
         }
+
+        private string _LoggedInUserId;
+        public string LoggedInUserId
+        {
+            get { return _LoggedInUserId; }
+            set
+            {
+                _LoggedInUserId = value;
+                OnPropertyChanged(nameof(LoggedInUserId));
+            }
+        }
         public RegisterViewModel()
         {
             User = new User();
             RegisterCommand = new RelayCommand(Register, CanRegister);
             LoginCommand = new RelayCommand(Login, CanLogin);
+            IsLoginButtonVisible = true;
         }
         private bool CanLogin(object parameter)
         {
-            // Implement your logic for when the login command can be executed
             return true;
         }
         private void Login(object parameter)
@@ -70,35 +106,37 @@ namespace app
                     using (MySqlCommand cmd = new MySqlCommand(query, connection))
                     {
                         cmd.Parameters.AddWithValue("@Username", User.Username);
+                        cmd.Parameters.AddWithValue("@UserId", User.UserId);
                         cmd.Parameters.AddWithValue("@Password", User.Password);
 
                         using (MySqlDataReader reader = cmd.ExecuteReader())
                         {
                             if (reader.Read())
                             {
-                                // User found, you can handle the successful login here
                                 MessageBox.Show("Login Successful by " + User.Username);
-                                LoggedInUsername = User.Username;
-                                 MainWindow MainWindow = new MainWindow((DataContext as RegisterViewModel)?.LoggedInUsername);
-                                frame.Content = new MainWindow() { DataContext = RegisterViewModel };
 
+                                // Kullanıcının kimliğini al ve kaydet
+                                // ((App)Application.Current).SharedViewModel.LoggedInUserId = reader.GetInt32(User.UserId).ToString();
+                                ((App)Application.Current).SharedViewModel.LoggedInUsername = User.Username;
+                                ((App)Application.Current).SharedViewModel.IsLoginButtonVisible = false;
+
+                                // Ana pencereyi aç
+                                Application.Current.MainWindow.Content = new MainWindow();
                             }
                             else
                             {
-                                // User not found or incorrect credentials
                                 MessageBox.Show("Login Failed");
                             }
-                            
                         }
                     }
                 }
-               
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"An error occurred during login: {ex.Message}");
             }
         }
+
 
         private bool CanRegister(object parameter)
         {
@@ -122,7 +160,8 @@ namespace app
                         cmd.Parameters.AddWithValue("@Password", User.Password);
 
                         cmd.ExecuteNonQuery();
-                        MessageBox.Show("Kayıt Başarılı");
+                        MessageBox.Show("Kayıt Başarılı! Giriş yaparak çalışmalarınıza başlayabilirsiniz");
+                        Application.Current.MainWindow.Content = new LoginPage();
 
                     }
                 }
@@ -131,9 +170,74 @@ namespace app
             }
             catch (Exception ex)
             {
+               
                 MessageBox.Show($"An error occurred during registration: {ex.Message}");
 
             }
+        }
+        public void SaveTaskToDatabase(Todo Todo)
+        {
+            try
+            {
+                using (MySqlConnection connection = GetConnection())
+                {
+                    connection.Open();
+                    string query = "INSERT INTO todolist (username, task, time) VALUES (@Username, @Task, @Time)";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@Username", Todo.username);
+                        cmd.Parameters.AddWithValue("@Task", Todo.task);
+                        cmd.Parameters.AddWithValue("@Time", Todo.time.ToString()); 
+
+                        cmd.ExecuteNonQuery();
+                        MessageBox.Show("Görev başarıyla veritabanına eklendi");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                 var LoggedInUsernameConrol =((App)Application.Current).SharedViewModel.LoggedInUsername;
+                if(LoggedInUsernameConrol != "" ){
+                     MessageBox.Show("Çalışmalarınız kaybolmasın istiyorsanız Lütfen bir kullanıcı giriniz !");
+                }else{
+                    MessageBox.Show($"Görev kaydedilirken bir hata oluştu: {ex.Message}");
+                }
+               
+            }
+        }
+        public List<string> GetUserTasks(string username)
+        {
+            List<string> userTasks = new List<string>();
+
+            try
+            {
+                using (MySqlConnection connection = GetConnection())
+                {
+                    connection.Open();
+                    string query = "SELECT task FROM todolist WHERE username = @Username";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@Username", username);
+
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                string task = reader.GetString("task");
+                                userTasks.Add(task);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Görevler alınırken bir hata oluştu: {ex.Message}");
+            }
+
+            return userTasks;
         }
 
         private static MySqlConnection GetConnection()

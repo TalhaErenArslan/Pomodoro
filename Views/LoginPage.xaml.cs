@@ -19,6 +19,7 @@ namespace app
 {
     public partial class LoginPage : Page
     {
+        
         public LoginPage()
         {
             InitializeComponent();
@@ -40,12 +41,11 @@ namespace app
 
         private void HomeButton_Click(object sender, RoutedEventArgs e)
         {
-            // mainWindow.Show();
+            
             Frame frame = new Frame();
             frame.Content = new MainWindow();
             this.Content = frame;
-            // LoginFrame.NavigationService.Navigate(new Uri("./Views/MainWindow.xaml", UriKind.Relative));
-            //  this.Close();
+           
         }
     }
 

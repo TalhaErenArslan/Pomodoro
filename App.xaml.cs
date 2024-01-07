@@ -13,5 +13,6 @@ namespace app
     /// </summary>
     public partial class App : Application
     {
+          public RegisterViewModel SharedViewModel { get; } = new RegisterViewModel();
     }
 }

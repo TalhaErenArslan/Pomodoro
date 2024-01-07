@@ -7,6 +7,9 @@
       mc:Ignorable="d"
       Title="MainWindow"
       Background="Black">
+    <Page.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -15,19 +18,23 @@
         <DockPanel>
             <Frame x:Name="MainFrame" />
         </DockPanel>
-        <!-- <StackPanel Orientation="Vertical"
-                    HorizontalAlignment="Left">
-            <TextBlock x:Name="LoggedInUserTextBlock"
-                       Text="{Binding LoggedInUsername}"
-                       Foreground="White"
-                       Margin="10,5,0,0" />
-        </StackPanel> -->
+        <StackPanel Orientation="Vertical"
+                    HorizontalAlignment="Right">
+            <Label x:Name="TextInputs"
+                   Width="50"
+                   Height="25"
+                   FontSize="12"
+                   Foreground="White"
+                   Margin="0,0,0,0"
+                   Content="{Binding LoggedInUsername, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
         <StackPanel Orientation="Vertical"
                     HorizontalAlignment="Right">
             <Button x:Name="LoginButton"
                     Width="80"
                     Height="30"
-                    Click="LoginButton_Click">
+                    Click="LoginButton_Click"
+                    Visibility="{Binding IsLoginButtonVisible, Converter={StaticResource BoolToVisibilityConverter}}">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Border CornerRadius="10"
@@ -46,11 +53,10 @@
                     Orientation="Vertical"
                     HorizontalAlignment="Center">
             <Grid>
-                <Ellipse
-                x:Name="ellipsee" 
-                        Width="300"
+                <Ellipse x:Name="ellipsee"
+                         Width="300"
                          Height="300"
-                        Margin="0,25"
+                         Margin="0,25"
                          Stroke="Blue"
                          StrokeThickness="3"
                          VerticalAlignment="Center"
@@ -70,8 +76,8 @@
                         Click="StartButton_Click"
                         Margin="0,05"
                         Height="35"
-                        Width="100" >
-                         <Button.Style>
+                        Width="100">
+                    <Button.Style>
                         <Style TargetType="Button">
                             <Setter Property="Template">
                                 <Setter.Value>
@@ -98,7 +104,7 @@
                             </Setter>
                         </Style>
                     </Button.Style>
-                    </Button>
+                </Button>
                 <Button x:Name="StopButton"
                         Content="Stop"
                         Click="StopButton_Click"
@@ -107,7 +113,7 @@
                         Margin="0,05"
                         Height="35"
                         Width="100">
-                         <Button.Style>
+                    <Button.Style>
                         <Style TargetType="Button">
                             <Setter Property="Template">
                                 <Setter.Value>
@@ -134,7 +140,7 @@
                             </Setter>
                         </Style>
                     </Button.Style>
-                    </Button>
+                </Button>
             </StackPanel>
             <Label Content="Tasks"
                    HorizontalAlignment="Center"
@@ -151,29 +157,72 @@
                 <Button Content="Add Task"
                         Click="AddButton_Click"
                         Width="80"
-                        Height="30" />
+                        Height="30">
+                            <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Border x:Name="Addborder"
+                                                Background="{TemplateBinding Background}"
+                                                CornerRadius="16">
+                                            <ContentPresenter HorizontalAlignment="Center"
+                                                              VerticalAlignment="Center" />
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver"
+                                                     Value="True">
+                                                <Setter Property="Background"
+                                                        Value="Orange"
+                                                        TargetName="Addborder" />
+                                                <Setter Property="TextBlock.Foreground"
+                                                        Value="Black"
+                                                        TargetName="Addborder" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                    </Button>
             </StackPanel>
             <Border Width="300"
                     Height="300"
-                    Background="White"
+                    Background="#f2f2f2"
                     CornerRadius="6">
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="15"
                                       Direction="-90"
                                       RenderingBias="Quality"
                                       ShadowDepth="2"
-                                      Color="Gray" />
+                                      Color="#808080" />
                 </Border.Effect>
                 <StackPanel Grid.Row="1"
                             Orientation="Vertical"
-                            HorizontalAlignment="Left">
+                            HorizontalAlignment="Left"
+                            Margin="10">
                     <ListBox x:Name="RadioListBox"
-                             VerticalAlignment="Top">
+                             VerticalAlignment="Top"
+                             Background="#f2f2f2"
+                             BorderBrush="Transparent">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <RadioButton Content="{Binding}"
-                                             Foreground="Black"
-                                             GroupName="SelectionGroup" />
+                                <Border BorderBrush="#b3b3b3"
+                                        BorderThickness="0 0 0 1"
+                                        Margin="0 0 0 5">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <RadioButton Content="{Binding}"
+                                                     Foreground="Black"
+                                                     GroupName="SelectionGroup"
+                                                     VerticalAlignment="Center"
+                                                    />
+                                    </Grid>
+                                </Border>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
