@@ -110,7 +110,12 @@ namespace app
             this.Content = frame;
         }
 
-
+        private void DetailButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame frame = new Frame();
+            frame.Content = new DetailPage();
+            this.Content = frame;
+        }
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             string inputText = TextInput.Text;
@@ -152,14 +157,31 @@ namespace app
         private void UpdateUserTasksListBox()
         {
             string username = ((App)Application.Current).SharedViewModel.LoggedInUsername;
-            List<string> userTasks = ((App)Application.Current).SharedViewModel.GetUserTasks(username);
+            List<(string Task, TimeSpan Time)> userTasks = ((App)Application.Current).SharedViewModel.GetUserTasks(username);
 
             RadioListBox.Items.Clear();
-            foreach (string task in userTasks)
+            foreach (var taskWithTime in userTasks)
             {
+                string task = taskWithTime.Task;
                 RadioListBox.Items.Add(task);
             }
         }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+           
+            if (!string.IsNullOrEmpty(selectedTask))
+            {
+                string username = ((App)Application.Current).SharedViewModel.LoggedInUsername;
+
+                // Delete the task from the database
+                ((App)Application.Current).SharedViewModel.DeleteTaskFromDatabase(username, selectedTask);
+
+                // Remove the task from the ListBox
+                RadioListBox.Items.Remove(selectedTask);
+            }
+        }
+
 
     }
 }

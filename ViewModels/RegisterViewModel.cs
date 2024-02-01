@@ -53,6 +53,7 @@ namespace app
         public string Password { get; internal set; }
 
         private bool _isLoginButtonVisible;
+
         public bool IsLoginButtonVisible
         {
             get { return _isLoginButtonVisible; }
@@ -60,6 +61,17 @@ namespace app
             {
                 _isLoginButtonVisible = value;
                 OnPropertyChanged(nameof(IsLoginButtonVisible));
+            }
+        }
+        private bool _isDetailButtonVisible;
+
+        public bool IsDetailButtonVisible
+        {
+            get { return _isDetailButtonVisible; }
+            set
+            {
+                _isDetailButtonVisible = value;
+                OnPropertyChanged(nameof(IsDetailButtonVisible));
             }
         }
         private string _loggedInUsername;
@@ -89,6 +101,7 @@ namespace app
             RegisterCommand = new RelayCommand(Register, CanRegister);
             LoginCommand = new RelayCommand(Login, CanLogin);
             IsLoginButtonVisible = true;
+            IsDetailButtonVisible = false;
         }
         private bool CanLogin(object parameter)
         {
@@ -119,6 +132,7 @@ namespace app
                                 // ((App)Application.Current).SharedViewModel.LoggedInUserId = reader.GetInt32(User.UserId).ToString();
                                 ((App)Application.Current).SharedViewModel.LoggedInUsername = User.Username;
                                 ((App)Application.Current).SharedViewModel.IsLoginButtonVisible = false;
+                                ((App)Application.Current).SharedViewModel.IsDetailButtonVisible = true;
 
                                 // Ana pencereyi aç
                                 Application.Current.MainWindow.Content = new MainWindow();
@@ -237,16 +251,16 @@ namespace app
                 MessageBox.Show($"Görev güncellenirken bir hata oluştu: {ex.Message}");
             }
         }
-        public List<string> GetUserTasks(string username)
+        public List<(string Task, TimeSpan Time)> GetUserTasks(string username)
         {
-            List<string> userTasks = new List<string>();
+            List<(string Task, TimeSpan Time)> userTasks = new List<(string Task, TimeSpan Time)>();
 
             try
             {
                 using (MySqlConnection connection = GetConnection())
                 {
                     connection.Open();
-                    string query = "SELECT task FROM todolist WHERE username = @Username";
+                    string query = "SELECT task, time FROM todolist WHERE username = @Username";
 
                     using (MySqlCommand cmd = new MySqlCommand(query, connection))
                     {
@@ -257,7 +271,8 @@ namespace app
                             while (reader.Read())
                             {
                                 string task = reader.GetString("task");
-                                userTasks.Add(task);
+                                TimeSpan time = reader.GetTimeSpan("time");
+                                userTasks.Add((task, time));
                             }
                         }
                     }
@@ -270,6 +285,35 @@ namespace app
 
             return userTasks;
         }
+
+        public void DeleteTaskFromDatabase(string username, string task)
+        {
+            try
+            {
+                using (MySqlConnection connection = GetConnection())
+                {
+                    connection.Open();
+                    string query = "DELETE FROM todolist WHERE username = @Username AND task = @Task";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@Username", username);
+                        cmd.Parameters.AddWithValue("@Task", task);
+
+                        cmd.ExecuteNonQuery();
+                        MessageBox.Show("Görev başarıyla silindi");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Görev silinirken bir hata oluştu: {ex.Message}");
+            }
+        }
+
+
+
+
 
         private static MySqlConnection GetConnection()
         {

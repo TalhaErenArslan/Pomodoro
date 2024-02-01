@@ -33,6 +33,7 @@
             <Button x:Name="LoginButton"
                     Width="80"
                     Height="30"
+                    Margin="10"
                     Click="LoginButton_Click"
                     Visibility="{Binding IsLoginButtonVisible, Converter={StaticResource BoolToVisibilityConverter}}">
                 <Button.Template>
@@ -48,7 +49,31 @@
                 </Button.Template>
                 <TextBlock Text="Giriş Yap" />
             </Button>
+            
         </StackPanel>
+        <StackPanel Orientation="Vertical"
+                    HorizontalAlignment="Left">
+
+        <Button x:Name="DetailButton"
+                    Width="80"
+                    Height="30"
+                    Margin="10"
+                    Click="DetailButton_Click"
+                    Visibility="{Binding IsDetailButtonVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="10"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+                <TextBlock Text="Detay" />
+            </Button>
+              </StackPanel>
         <StackPanel Grid.Row="0"
                     Orientation="Vertical"
                     HorizontalAlignment="Center">
@@ -189,7 +214,8 @@
                 <Button x:Name="DeleteButton"
                         Content="Görevi Sil"
                         Width="80"
-                        Height="30">
+                        Height="30"
+                        Click="DeleteButton_Click">
                     <Button.Style>
                         <Style TargetType="Button">
                             <Setter Property="Template">
@@ -220,7 +246,7 @@
                 </Button>
             </StackPanel>
             <Border Width="400"
-                    Height="300"
+                    Height="auto"
                     Background="#f2f2f2"
                     CornerRadius="6">
                 <Border.Effect>

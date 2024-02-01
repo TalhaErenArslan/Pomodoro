@@ -39,8 +39,5 @@ namespace app
             this.Content = frame;
         }
     }
-    internal class UsernameTextBox
-    {
-        public static string Text { get; internal set; }
-    }
+    
 }

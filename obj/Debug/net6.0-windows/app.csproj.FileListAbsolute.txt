@@ -107,3 +107,5 @@ C:\Users\talha\OneDrive\Belgeler\Programlar\1Projeler\nesneYonelimliProgramlama\
 C:\Users\talha\OneDrive\Belgeler\Programlar\1Projeler\nesneYonelimliProgramlama\nesne_talha\app\bin\Debug\net6.0-windows\Microsoft.Extensions.Logging.Abstractions.dll
 C:\Users\talha\OneDrive\Belgeler\Programlar\1Projeler\nesneYonelimliProgramlama\nesne_talha\app\bin\Debug\net6.0-windows\MySqlConnector.dll
 C:\Users\talha\OneDrive\Belgeler\Programlar\1Projeler\nesneYonelimliProgramlama\nesne_talha\app\obj\Debug\net6.0-windows\GeneratedInternalTypeHelper.g.cs
+C:\Users\talha\OneDrive\Belgeler\Programlar\1Projeler\nesneYonelimliProgramlama\nesne_talha\app\obj\Debug\net6.0-windows\Views\DetailPage.g.cs
+C:\Users\talha\OneDrive\Belgeler\Programlar\1Projeler\nesneYonelimliProgramlama\nesne_talha\app\obj\Debug\net6.0-windows\Views\DetailPage.baml

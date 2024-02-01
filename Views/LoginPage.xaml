@@ -12,11 +12,11 @@
             <Frame x:Name="LoginFrame" />
         </DockPanel>
         <StackPanel Orientation="Vertical"
-                    HorizontalAlignment="Right">
-           
+                    HorizontalAlignment="Left">
             <Button x:Name="HomeButton"
                     Width="80"
                     Height="30"
+                    Margin="10"
                     Click="HomeButton_Click">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
