@@ -27,28 +27,18 @@ namespace app
 
         private void SigninButton_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
                 Frame frame = new Frame();
                 frame.Content = new RegisterPage();
                 this.Content = frame;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"An error occurred: {ex.Message}");
-            }
         }
 
         private void HomeButton_Click(object sender, RoutedEventArgs e)
         {
-            
             Frame frame = new Frame();
             frame.Content = new MainWindow();
             this.Content = frame;
-           
         }
     }
-
     internal class UsernameTextBox
     {
         public static string Text { get; internal set; }

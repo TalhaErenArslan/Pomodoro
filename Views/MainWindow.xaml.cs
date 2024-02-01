@@ -15,8 +15,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using app.Models;
-using app.Models;
-
 namespace app
 {
     /// <summary>
@@ -45,6 +43,17 @@ namespace app
                 MessageBox.Show($"An error occurred: {ex.Message}");
             }
         }
+        private string selectedTask;
+
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            RadioButton radioButton = sender as RadioButton;
+            if (radioButton != null && radioButton.IsChecked == true)
+            {
+                selectedTask = radioButton.Content.ToString();
+            }
+        }
+
 
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
@@ -69,10 +78,11 @@ namespace app
             // StopButton.Background = Brushes.DarkRed;
             if (isTimerRunning)
             {
-                SaveTaskToDatabase(); // Eğer durdurulduysa, görevi kaydet
+                // Eğer durdurulduysa, görevi kaydet
                 timer.Stop();
                 isTimerRunning = false;
                 ellipsee.Stroke = Brushes.DarkRed;
+                SaveTaskToDatabase();
             }
         }
 
@@ -112,7 +122,7 @@ namespace app
                 {
                     username = username,
                     task = inputText,
-                    time = TimeSpan.Zero
+                    time = TimeSpan.FromMinutes(25)
                 };
 
                 ((App)Application.Current).SharedViewModel.SaveTaskToDatabase(newTask);
@@ -122,22 +132,22 @@ namespace app
         }
         private void SaveTaskToDatabase()
         {
-            string inputText = (string)RadioListBox.SelectedItem;
-            if (!string.IsNullOrEmpty(inputText))
+            if (!string.IsNullOrEmpty(selectedTask))
             {
                 string username = ((App)Application.Current).SharedViewModel.LoggedInUsername;
                 Todo newTask = new Todo
                 {
                     username = username,
-                    task = inputText,
-                    time = TimeSpan.FromMinutes(25) - timeRemaining
+                    task = selectedTask,
+                    time = timeRemaining
                 };
 
-                ((App)Application.Current).SharedViewModel.SaveTaskToDatabase(newTask);
-                RadioListBox.Items.Remove(inputText);
-                TextInput.Clear();
+                ((App)Application.Current).SharedViewModel.UpdateTaskToDatabase(newTask);
+                // Clear the selection after saving the task if needed
+                // selectedTask = null;
             }
         }
+
 
         private void UpdateUserTasksListBox()
         {

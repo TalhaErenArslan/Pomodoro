@@ -170,7 +170,7 @@ namespace app
             }
             catch (Exception ex)
             {
-               
+
                 MessageBox.Show($"An error occurred during registration: {ex.Message}");
 
             }
@@ -188,7 +188,7 @@ namespace app
                     {
                         cmd.Parameters.AddWithValue("@Username", Todo.username);
                         cmd.Parameters.AddWithValue("@Task", Todo.task);
-                        cmd.Parameters.AddWithValue("@Time", Todo.time.ToString()); 
+                        cmd.Parameters.AddWithValue("@Time", Todo.time.ToString());
 
                         cmd.ExecuteNonQuery();
                         MessageBox.Show("Görev başarıyla veritabanına eklendi");
@@ -197,13 +197,44 @@ namespace app
             }
             catch (Exception ex)
             {
-                 var LoggedInUsernameConrol =((App)Application.Current).SharedViewModel.LoggedInUsername;
-                if(LoggedInUsernameConrol != "" ){
-                     MessageBox.Show("Çalışmalarınız kaybolmasın istiyorsanız Lütfen bir kullanıcı giriniz !");
-                }else{
+                var LoggedInUsernameConrol = ((App)Application.Current).SharedViewModel.LoggedInUsername;
+                if (LoggedInUsernameConrol != "")
+                {
+                    MessageBox.Show("Çalışmalarınız kaybolmasın istiyorsanız Lütfen bir kullanıcı giriniz !");
+                }
+                else
+                {
                     MessageBox.Show($"Görev kaydedilirken bir hata oluştu: {ex.Message}");
                 }
-               
+
+            }
+        }
+
+        public void UpdateTaskToDatabase(Todo Todo)
+        {
+            try
+            {
+
+                using (MySqlConnection connection = GetConnection())
+                {
+                    connection.Open();
+                    string query = "UPDATE todolist SET time = @Time WHERE username = @Username AND task = @Task";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, connection))
+
+                    {
+                        cmd.Parameters.AddWithValue("@Username", Todo.username);
+                        cmd.Parameters.AddWithValue("@Task", Todo.task);
+                        cmd.Parameters.AddWithValue("@Time", Todo.time.ToString());
+
+                        cmd.ExecuteNonQuery();
+                        MessageBox.Show("Görev başarıyla güncellendi");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Görev güncellenirken bir hata oluştu: {ex.Message}");
             }
         }
         public List<string> GetUserTasks(string username)

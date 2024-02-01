@@ -30,7 +30,7 @@
                         </Border>
                     </ControlTemplate>
                 </Button.Template>
-                <TextBlock Text="Home" />
+                <TextBlock Text="Ana Sayfa" />
             </Button>
         </StackPanel>
         <Border Width="300"
@@ -64,7 +64,7 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <TextBlock x:Name="UsernameTextBox"
-                               Text="User Name"
+                               Text="Kullanıcı Adı"
                                Grid.Row="0"
                                Margin="0,15"
                                HorizontalAlignment="Left" />
@@ -76,7 +76,7 @@
                              HorizontalAlignment="Left"
                              Text="{Binding User.Username, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBlock x:Name="NameTextBox"
-                               Text="Name"
+                               Text="Ad"
                                Grid.Row="2"
                                Margin="0,15"
                                HorizontalAlignment="Left" />
@@ -87,7 +87,7 @@
                              HorizontalAlignment="Left"
                              Text="{Binding User.Name, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBlock x:Name="SurnameTextBox"
-                               Text="Surname"
+                               Text="Soyad"
                                Grid.Row="4"
                                Margin="0,15"
                                HorizontalAlignment="Left" />
@@ -97,7 +97,7 @@
                              BorderThickness="0,0,0,1"
                              HorizontalAlignment="Left"
                              Text="{Binding User.Surname, UpdateSourceTrigger=PropertyChanged}" />
-                    <TextBlock Text="Password"
+                    <TextBlock Text="Şifre"
                                Grid.Row="6"
                                Margin="0,15"
                                HorizontalAlignment="Left" />
@@ -110,7 +110,7 @@
                              BorderThickness="0,0,0,1"
                              HorizontalAlignment="Left" />
                 </Grid>
-                <Button Content="Save"
+                <Button Content="Kayıt Ol"
                         Foreground="White"
                         Background="Black"
                         Margin="0,25"

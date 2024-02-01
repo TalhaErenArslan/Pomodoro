@@ -22,8 +22,8 @@
                     HorizontalAlignment="Right">
             <Label x:Name="TextInputs"
                    Width="50"
-                   Height="25"
-                   FontSize="12"
+                   Height="29"
+                   FontSize="15"
                    Foreground="White"
                    Margin="0,0,0,0"
                    Content="{Binding LoggedInUsername, UpdateSourceTrigger=PropertyChanged}" />
@@ -46,7 +46,7 @@
                         </Border>
                     </ControlTemplate>
                 </Button.Template>
-                <TextBlock Text="Login" />
+                <TextBlock Text="Giriş Yap" />
             </Button>
         </StackPanel>
         <StackPanel Grid.Row="0"
@@ -72,7 +72,7 @@
                         Orientation="Horizontal"
                         HorizontalAlignment="Center">
                 <Button x:Name="StartButton"
-                        Content="Start"
+                        Content="Başlat"
                         Click="StartButton_Click"
                         Margin="0,05"
                         Height="35"
@@ -106,7 +106,7 @@
                     </Button.Style>
                 </Button>
                 <Button x:Name="StopButton"
-                        Content="Stop"
+                        Content="Durdur"
                         Click="StopButton_Click"
                         Foreground="Black"
                         Background="Gray"
@@ -142,7 +142,7 @@
                     </Button.Style>
                 </Button>
             </StackPanel>
-            <Label Content="Tasks"
+            <Label Content="Görevler"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    Foreground="White"
@@ -154,11 +154,11 @@
                          Width="200"
                          Height="25"
                          Margin="0,10,10,10" />
-                <Button Content="Add Task"
+                <Button Content="Görev Ekle"
                         Click="AddButton_Click"
                         Width="80"
                         Height="30">
-                            <Button.Style>
+                    <Button.Style>
                         <Style TargetType="Button">
                             <Setter Property="Template">
                                 <Setter.Value>
@@ -185,9 +185,41 @@
                             </Setter>
                         </Style>
                     </Button.Style>
-                    </Button>
+                </Button>
+                <Button x:Name="DeleteButton"
+                        Content="Görevi Sil"
+                        Width="80"
+                        Height="30">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Border x:Name="Addborder"
+                                                Background="{TemplateBinding Background}"
+                                                CornerRadius="16">
+                                            <ContentPresenter HorizontalAlignment="Center"
+                                                              VerticalAlignment="Center" />
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver"
+                                                     Value="True">
+                                                <Setter Property="Background"
+                                                        Value="Orange"
+                                                        TargetName="Addborder" />
+                                                <Setter Property="TextBlock.Foreground"
+                                                        Value="Black"
+                                                        TargetName="Addborder" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
             </StackPanel>
-            <Border Width="300"
+            <Border Width="400"
                     Height="300"
                     Background="#f2f2f2"
                     CornerRadius="6">
@@ -219,8 +251,7 @@
                                         <RadioButton Content="{Binding}"
                                                      Foreground="Black"
                                                      GroupName="SelectionGroup"
-                                                     VerticalAlignment="Center"
-                                                    />
+                                                     Checked="RadioButton_Checked" />
                                     </Grid>
                                 </Border>
                             </DataTemplate>
