@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\talha\\OneDrive\\Belgeler\\Programlar\\1Projeler\\nesneYonelimliProgramlama\\nesne_talha\\app\\app.csproj": {}
+    "C:\\Users\\talha\\OneDrive\\Belgeler\\Programlar\\2.sınıf1.donem\\Nesne\\Projeler\\app\\app.csproj": {}
   },
   "projects": {
-    "C:\\Users\\talha\\OneDrive\\Belgeler\\Programlar\\1Projeler\\nesneYonelimliProgramlama\\nesne_talha\\app\\app.csproj": {
+    "C:\\Users\\talha\\OneDrive\\Belgeler\\Programlar\\2.sınıf1.donem\\Nesne\\Projeler\\app\\app.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\talha\\OneDrive\\Belgeler\\Programlar\\1Projeler\\nesneYonelimliProgramlama\\nesne_talha\\app\\app.csproj",
+        "projectUniqueName": "C:\\Users\\talha\\OneDrive\\Belgeler\\Programlar\\2.sınıf1.donem\\Nesne\\Projeler\\app\\app.csproj",
         "projectName": "app",
-        "projectPath": "C:\\Users\\talha\\OneDrive\\Belgeler\\Programlar\\1Projeler\\nesneYonelimliProgramlama\\nesne_talha\\app\\app.csproj",
+        "projectPath": "C:\\Users\\talha\\OneDrive\\Belgeler\\Programlar\\2.sınıf1.donem\\Nesne\\Projeler\\app\\app.csproj",
         "packagesPath": "C:\\Users\\talha\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\talha\\OneDrive\\Belgeler\\Programlar\\1Projeler\\nesneYonelimliProgramlama\\nesne_talha\\app\\obj\\",
+        "outputPath": "C:\\Users\\talha\\OneDrive\\Belgeler\\Programlar\\2.sınıf1.donem\\Nesne\\Projeler\\app\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\talha\\AppData\\Roaming\\NuGet\\NuGet.Config"

@@ -30,7 +30,6 @@ namespace app
             try
             {
                 InitializeComponent();
-                // DataContext = new RegisterViewModel();
                 DataContext = ((App)Application.Current).SharedViewModel;
                 timeRemaining = new TimeSpan(0, 25, 0);
                 timer = new DispatcherTimer();
@@ -63,22 +62,12 @@ namespace app
                 ellipsee.Stroke = Brushes.Green;
                 isTimerRunning = true;
             }
-            // timer.Start();
-            // StartButton.Background = Brushes.Green;
-            // StopButton.Background = Brushes.White;
-
-
         }
 
         private void StopButton_Click(object sender, RoutedEventArgs e)
         {
-            // timer.Stop();
-
-            // StartButton.Background = Brushes.White;
-            // StopButton.Background = Brushes.DarkRed;
             if (isTimerRunning)
             {
-                // Eğer durdurulduysa, görevi kaydet
                 timer.Stop();
                 isTimerRunning = false;
                 ellipsee.Stroke = Brushes.DarkRed;
@@ -89,15 +78,11 @@ namespace app
         private void Timer_Tick(object sender, EventArgs e)
         {
             TimeLabel.Content = timeRemaining.ToString("mm\\:ss");
-
             timeRemaining = timeRemaining.Subtract(new TimeSpan(0, 0, 1));
-
             if (timeRemaining.TotalSeconds == 0)
             {
                 timer.Stop();
                 isTimerRunning = false;
-
-                // Süre bittiğinde görevi kaydet
                 SaveTaskToDatabase();
                 MessageBox.Show("Time's up!");
             }
@@ -146,10 +131,7 @@ namespace app
                     task = selectedTask,
                     time = timeRemaining
                 };
-
                 ((App)Application.Current).SharedViewModel.UpdateTaskToDatabase(newTask);
-                // Clear the selection after saving the task if needed
-                // selectedTask = null;
             }
         }
 
@@ -158,7 +140,6 @@ namespace app
         {
             string username = ((App)Application.Current).SharedViewModel.LoggedInUsername;
             List<(string Task, TimeSpan Time)> userTasks = ((App)Application.Current).SharedViewModel.GetUserTasks(username);
-
             RadioListBox.Items.Clear();
             foreach (var taskWithTime in userTasks)
             {
@@ -169,15 +150,10 @@ namespace app
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-           
             if (!string.IsNullOrEmpty(selectedTask))
             {
                 string username = ((App)Application.Current).SharedViewModel.LoggedInUsername;
-
-                // Delete the task from the database
                 ((App)Application.Current).SharedViewModel.DeleteTaskFromDatabase(username, selectedTask);
-
-                // Remove the task from the ListBox
                 RadioListBox.Items.Remove(selectedTask);
             }
         }

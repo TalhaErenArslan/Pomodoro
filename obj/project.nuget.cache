@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "e7qiSgN1c2yBJ7JcksFhIIp/wAZ8a8yh+mfd6mUlwjK494b/5q7cFHOhdDycs9dhN+03wI1yLJ6q12RQe7Jlhw==",
+  "dgSpecHash": "SsYuKwXiQGHQ91QjqnXpyB6hiXCcqoZ2jb99iHdu5NSoZHia8KcfHUEo9ZpkuQVWf1NL8eLazQSkbYXyfccJVQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\talha\\OneDrive\\Belgeler\\Programlar\\1Projeler\\nesneYonelimliProgramlama\\nesne_talha\\app\\app.csproj",
+  "projectFilePath": "C:\\Users\\talha\\OneDrive\\Belgeler\\Programlar\\2.sınıf1.donem\\Nesne\\Projeler\\app\\app.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\talha\\.nuget\\packages\\bouncycastle.cryptography\\2.2.1\\bouncycastle.cryptography.2.2.1.nupkg.sha512",
     "C:\\Users\\talha\\.nuget\\packages\\google.protobuf\\3.21.9\\google.protobuf.3.21.9.nupkg.sha512",

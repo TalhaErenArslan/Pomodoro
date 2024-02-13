@@ -127,14 +127,9 @@ namespace app
                             if (reader.Read())
                             {
                                 MessageBox.Show("Login Successful by " + User.Username);
-
-                                // Kullanıcının kimliğini al ve kaydet
-                                // ((App)Application.Current).SharedViewModel.LoggedInUserId = reader.GetInt32(User.UserId).ToString();
                                 ((App)Application.Current).SharedViewModel.LoggedInUsername = User.Username;
                                 ((App)Application.Current).SharedViewModel.IsLoginButtonVisible = false;
                                 ((App)Application.Current).SharedViewModel.IsDetailButtonVisible = true;
-
-                                // Ana pencereyi aç
                                 Application.Current.MainWindow.Content = new MainWindow();
                             }
                             else
@@ -310,11 +305,6 @@ namespace app
                 MessageBox.Show($"Görev silinirken bir hata oluştu: {ex.Message}");
             }
         }
-
-
-
-
-
         private static MySqlConnection GetConnection()
         {
             const string connectionString = "Server=localhost;Database=wpf_timer;User Id=root;Password=Mysql@123;";
